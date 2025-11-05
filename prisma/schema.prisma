@@ -1,0 +1,75 @@
+// 1. Configuração do Prisma 
+generator client {
+  provider = "prisma-client-js"
+}
+
+// 2. Configuração da Conexão com o Banco (Neon)
+datasource db {
+  provider     = "postgresql" // Nosso banco é Postgres
+  url          = env("DATABASE_URL") // Pega a strong de conexão do arquivo .env 
+  relationMode = "prisma" // Necessário para o Neon (Postgres Serveless)
+}
+
+// --- NOSSAS TABELAS --- 
+
+// Tabela de Usuários (Autenticação)
+// Guarda as informações privadas de login 
+model User { 
+  id    String @id @default(uuid())
+  email String @unique
+
+  hashedPassword String? // O '?' torna opicional (para OAuth futuro)
+  authProvider String? // (ex: 'github', 'google')
+
+  // Colunas para o SaaS (Stripe)
+  plan                  String    @default("FREE")
+  stripeCustomerId      String    @unique // ID do cliente no Stripe 
+  stripeSubscriptionId  String    @unique // ID de assinatura 
+  stripeSubscriptionEndsAt   DateTime? // Data que a assinatura PRO expira 
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relação 1-para-1: Um User tem um profile 
+  profile Profile? 
+}
+
+// tabela de Perfis (Página Pública)
+// Guarda as informações públicas da página "link-in-bio". 
+model Profile {
+  id    String @id @default(uuid())
+  slug  String @unique // O "username" na URL (ex: linkhub.com/slug)
+  title String?
+  bio   String?
+  avatarUrl String?
+  theme String? @default("default") // (ex: 'default', 'dark', 'light')
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relação 1-para-1: Um Profile PERTENCE a um User
+  // Este é o "campo dono" da relação.
+  userId String @unique // Chave estrangeira
+  user User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  // Relação 1-para-1: Um Profile tem muitos links 
+  links Link[]
+}
+
+// Tabela de Links
+// Os links que pertencem a um perfil.
+
+model Link {
+  id    String @id @default(uuid())
+  title String
+  url   String
+  order Int    @default(0) // Para permitir a ordenação (drag-and-drop)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  // Relação N-para-1: Um Link PERTENCE a um Profile
+  profileId String
+  profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+}
+
