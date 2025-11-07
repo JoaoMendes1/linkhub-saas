@@ -71,5 +71,7 @@ model Link {
   // Relação N-para-1: Um Link PERTENCE a um Profile
   profileId String
   profile   Profile @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  @@index([profileId])
 }
 
