@@ -10,28 +10,28 @@ O LinkHub permite que criadores de conteúdo, desenvolvedores e marcas centraliz
 
 ### ✨ Features (MVP V1)
 
-* **Autenticação:** Cadastro e Login com E-mail/Senha.
-* **Gestão de Perfil:** Criação de um perfil público com `slug` único (ex: `linkhub.dev/seu-slug`).
-* **Gestão de Links:** Adicionar, editar, remover e reordenar links.
-* **Temas Básicos:** Seleção de temas de cores para a página pública.
-* **Modo Claro/Escuro:** Suporte nativo a Dark Mode.
-* **Plano PRO (com Stripe):**
-    * Analytics (visualização de cliques por link).
-    * Temas customizáveis (Premium).
-    * Remoção da marca "LinkHub".
+- **Autenticação:** Cadastro e Login com E-mail/Senha.
+- **Gestão de Perfil:** Criação de um perfil público com `slug` único (ex: `linkhub.dev/seu-slug`).
+- **Gestão de Links:** Adicionar, editar, remover e reordenar links.
+- **Temas Básicos:** Seleção de temas de cores para a página pública.
+- **Modo Claro/Escuro:** Suporte nativo a Dark Mode.
+- **Plano PRO (com Stripe):**
+  - Analytics (visualização de cliques por link).
+  - Temas customizáveis (Premium).
+  - Remoção da marca "LinkHub".
 
 ---
 
 ## 🛠️ Tech Stack (Arquitetura)
 
-* **Framework:** Next.js (App Router)
-* **Linguagem:** TypeScript
-* **Estilização:** Tailwind CSS
-* **Banco de Dados:** PostgreSQL (Serverless via Neon)
-* **ORM:** Prisma
-* **Autenticação:** (A definir: NextAuth.js ou JWT próprio)
-* **Pagamentos:** Stripe (Subscriptions)
-* **Hospedagem:** Vercel
+- **Framework:** Next.js (App Router)
+- **Linguagem:** TypeScript
+- **Estilização:** Tailwind CSS
+- **Banco de Dados:** PostgreSQL (Serverless via Neon)
+- **ORM:** Prisma
+- **Autenticação:** (A definir: NextAuth.js ou JWT próprio)
+- **Pagamentos:** Stripe (Subscriptions)
+- **Hospedagem:** Vercel
 
 ---
 
@@ -45,4 +45,4 @@ Um roadmap detalhado das fases do projeto está disponível em [ROADMAP.md](ROAD
 
 ## 🏁 Como Rodar (Setup Local)
 
-*(Esta seção será preenchida assim que inicializarmos o projeto)*
+_(Esta seção será preenchida assim que inicializarmos o projeto)_
