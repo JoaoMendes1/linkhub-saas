@@ -23,8 +23,8 @@ model User {
 
   // Colunas para o SaaS (Stripe)
   plan                  String    @default("FREE")
-  stripeCustomerId      String    @unique // ID do cliente no Stripe 
-  stripeSubscriptionId  String    @unique // ID de assinatura 
+  stripeCustomerId      String?    @unique // ID do cliente no Stripe 
+  stripeSubscriptionId  String?  @unique // ID de assinatura 
   stripeSubscriptionEndsAt   DateTime? // Data que a assinatura PRO expira 
 
   createdAt DateTime @default(now())
