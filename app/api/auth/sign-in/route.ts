@@ -3,6 +3,8 @@ import { NextRequest, NextResponse } from 'next/server'
 import bcrypt from 'bcrypt' // Para comparar a senha
 import { prisma } from '@/lib/prisma' // Nosso client do Prisma
 
+import { encrypt, sessionOptions } from '@/lib/session'
+
 // Função para a rota POST (Login)
 export async function POST(request: NextRequest) {
   try {
@@ -47,19 +49,29 @@ export async function POST(request: NextRequest) {
       )
     }
 
-    // 4. (Futuro - Issue de Sessão) Criar a sessão / JWT
-    // Por enquanto, apenas retornamos sucesso.
-    // O Critério de Aceitação #6 (proteger rotas) virá depois.
+    // 4.Criar a sessão / JWT
+    const payload = {
+      userId: user.id,
+      email: user.email,
+    }
 
-    // 5. Retorna uma resposta de sucesso
-    return NextResponse.json(
+    // Criptografar o payload para geração do token 
+    const session = await encrypt(payload)
+
+    // 5. Criação da resposta de sucesso
+    const response = NextResponse.json(
       {
-        message: 'Login bem-sucedido!',
-        userId: user.id,
-        email: user.email,
+        message: 'Login bem-sucedido!', 
       },
-      { status: 200 }, // 200 = OK
+      { status: 200},
     )
+
+    // 6. Salvar a sessão no cookie
+    response.cookies.set(sessionOptions.name, session, sessionOptions)
+    
+    // 7 Retorna a resposta 
+    return response
+  
   } catch (error) {
     console.error('Erro no login:', error)
     return NextResponse.json(
