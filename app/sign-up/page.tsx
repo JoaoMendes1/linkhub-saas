@@ -57,6 +57,9 @@ export default function SignUpPage() {
 
         //Redireciona para o login após 2 segundos
         setTimeout(() => {
+          // Forçamos um carregamento total da página.
+        // Isso garante que o Header (Server Component) seja recriado do zero.
+        window.location.href = '/admin/profile'
           router.push('/sign-in')
         }, 2000)
       }
