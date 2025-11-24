@@ -43,6 +43,11 @@ export default function SignInPage() {
         setError(data.error || 'Falha no login.')
       } else {
         // SUCESSO!
+
+        // Forçamos um carregamento total da página.
+        // Isso garante que o Header (Server Component) seja recriado do zero.
+        window.location.href = '/admin/profile'
+
         // Redireciona para o dashboard de perfil
         router.push('/admin/profile')
       }
