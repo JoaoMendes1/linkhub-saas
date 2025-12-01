@@ -37,7 +37,7 @@ export default function SignUpPage() {
       const response = await fetch('api/auth/sign-up', {
         method: 'POST',
         headers: {
-          'COntent-type': 'application/json'
+          'Content-type': 'application/json'
         },
         body: JSON.stringify({
           email: email,
@@ -59,7 +59,7 @@ export default function SignUpPage() {
         setTimeout(() => {
           // Forçamos um carregamento total da página.
         // Isso garante que o Header (Server Component) seja recriado do zero.
-        window.location.href = '/admin/profile'
+        // window.location.href = '/admin/profile'
           router.push('/sign-in')
         }, 2000)
       }
