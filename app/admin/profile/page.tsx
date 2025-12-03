@@ -2,6 +2,7 @@
 'use client'
 
 import { useState, useEffect } from 'react'
+import { ThemeToggle } from '@/components/theme-toggle'
 
 export default function ProfileAdminPage() {
   // Estados dos campos
@@ -10,7 +11,7 @@ export default function ProfileAdminPage() {
   const [bio, setBio] = useState('')
 
   // Estados de interface
-  const [isLoading, setIsLoading] = useState(true) // Começa carregando
+  const [isLoading, setIsLoading] = useState(true)
   const [isSaving, setIsSaving] = useState(false)
   const [message, setMessage] = useState<{ text: string; type: 'success' | 'error' } | null>(null)
 
@@ -18,22 +19,17 @@ export default function ProfileAdminPage() {
   useEffect(() => {
     fetch('/api/profile')
       .then((res) => {
-        if (res.status === 401) {
-           // Se não estiver logado, o middleware já deveria ter redirecionado,
-           // mas por segurança lidamos aqui também.
-           return null
-        }
+        if (res.status === 401) return null
         return res.json()
       })
       .then((data) => {
         if (data) {
-          // Preenche os campos com o que veio do banco
           setSlug(data.slug || '')
           setTitle(data.title || '')
           setBio(data.bio || '')
         }
       })
-      .finally(() => setIsLoading(false)) // Terminou de carregar
+      .finally(() => setIsLoading(false))
   }, [])
 
   // 2. Salvar dados ao enviar o formulário
@@ -52,11 +48,9 @@ export default function ProfileAdminPage() {
       const data = await response.json()
 
       if (!response.ok) {
-        // Se deu erro (ex: Slug já existe)
         throw new Error(data.error || 'Erro ao salvar.')
       }
 
-      // Sucesso!
       setMessage({ text: 'Perfil atualizado com sucesso!', type: 'success' })
     } catch (error: any) {
       setMessage({ text: error.message, type: 'error' })
@@ -86,9 +80,10 @@ export default function ProfileAdminPage() {
               Atualize sua página pública e seus links.
             </p>
           </div>
+          <ThemeToggle />
         </div>
 
-        {/* Mensagem de Feedback (Sucesso/Erro) */}
+        {/* Mensagem de Feedback */}
         {message && (
           <div
             className={`p-4 rounded-md text-sm ${
@@ -101,9 +96,9 @@ export default function ProfileAdminPage() {
           </div>
         )}
 
-        {/* Formulário de Perfil */}
+        {/* Formulário */}
         <form onSubmit={handleSubmit} className="space-y-6">
-          <div className="rounded-lg bg-zinc-100 p-6 shadow-lg dark:bg-zinc-800">
+          <div className="rounded-lg bg-white p-6 shadow-lg dark:bg-zinc-800">
             <h2 className="text-xl font-semibold text-zinc-900 dark:text-zinc-50">
               Seu Perfil
             </h2>
@@ -134,9 +129,21 @@ export default function ProfileAdminPage() {
                   onChange={(e) => setSlug(e.target.value)}
                 />
               </div>
-              <p className="mt-1 text-xs text-zinc-500">
-                Apenas letras minúsculas, números e hífens.
-              </p>
+              
+              {/* NOVO: Link clicável para a página pública */}
+              {slug && (
+                <p className="mt-2 text-sm text-zinc-500">
+                  Seu link público:{" "}
+                  <a
+                    href={`/${slug}`}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="text-indigo-600 hover:underline font-medium dark:text-indigo-400"
+                  >
+                    {`${typeof window !== 'undefined' ? window.location.origin : ''}/${slug}`}
+                  </a>
+                </p>
+              )}
             </div>
 
             {/* Campo do Título */}
@@ -182,8 +189,8 @@ export default function ProfileAdminPage() {
           <div className="flex justify-end">
             <button
               type="submit"
-              disabled={isSaving} // Desabilita enquanto salva
-              className={`rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 focus:ring-offset-white dark:focus:ring-offset-zinc-800 ${
+              disabled={isSaving}
+              className={`rounded-md border border-transparent px-4 py-2 text-sm font-medium text-white shadow-sm focus:outline-none focus:ring-2 focus:ring-indigo-500 focus:ring-offset-2 dark:focus:ring-offset-zinc-800 ${
                 isSaving
                   ? 'bg-indigo-400 cursor-not-allowed'
                   : 'bg-indigo-600 hover:bg-indigo-700'
