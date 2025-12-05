@@ -1,12 +1,12 @@
 # 🛣️ LinkHub SaaS - Roadmap
 
-Este documento descreve a visão de alto nível e as fases de desenvolvimento do LinkHub. Para um acompanhamento detalhado das tarefas, consulte nosso [GitHub Project Board]. (Lembre-se de adicionar o link do seu board aqui)
+Este documento descreve a visão de alto nível e as fases de desenvolvimento do LinkHub.
 
 ---
 
-## 🎯 Fase 1: MVP (Minimum Viable Product)
+## 🎯 Fase 1: MVP (Minimum Viable Product) - ✅ CONCLUÍDO
 
-O objetivo desta fase é lançar o *core* do produto: um fluxo de autenticação funcional e um dashboard para gerenciar uma página pública.
+O objetivo desta fase foi lançar o *core* do produto: autenticação, dashboard e página pública.
 
 ### 1.1: Fundação & Setup (Project Foundation)
 * [x] Configurar projeto Next.js, TypeScript, Tailwind, Neon e Prisma.
@@ -20,30 +20,30 @@ O objetivo desta fase é lançar o *core* do produto: um fluxo de autenticação
 * [x] Conectar UI de Cadastro à API.
 * [x] Criar UI da página de Login (`/sign-in`).
 * [x] Criar API de Login (`/api/auth/sign-in`).
-* [ ] **A FAZER:** Conectar UI de Login à API.
-* [ ] **A FAZER:** Implementar sistema de Sessão (ex: JWT/Cookies) para manter o usuário logado.
-* [ ] **A FAZER:** Implementar fluxo de "Esqueci minha senha" (API de token e envio de e-mail).
-* [ ] **A FAZER:** Proteger rotas de admin (`/admin/*`).
-* [ ] **A FAZER:** Criar o *Header* dinâmico (Mostrar "Login" vs "Dashboard").
+* [x] Conectar UI de Login à API.
+* [x] Implementar sistema de Sessão (JWT/Cookies) para manter o usuário logado.
+* [x] Proteger rotas de admin (`/admin/*`) via Middleware.
 
 ### 1.3: Dashboard de Admin (Admin Dashboard)
 * [x] Criar a UI da página de Perfil (`/admin/profile`).
 * [x] Criar a UI da página de Links (`/admin/links`).
-* [ ] **A FAZER:** Criar API para criar/atualizar o Perfil.
-* [ ] **A FAZER:** Criar API para gerenciar Links (CRUD completo).
-* [ ] **A FAZER:** Conectar a UI do Dashboard às APIs.
+* [x] Criar API para criar/atualizar o Perfil.
+* [x] Criar API para gerenciar Links (CRUD completo: Criar, Ler, Deletar).
+* [x] Conectar a UI do Dashboard às APIs.
 
 ### 1.4: Página Pública (Public Profile Page)
-* [x] Criar a rota dinâmica `/[slug]` (com dados *fake*).
-* [ ] **A FAZER:** Criar API pública para buscar Perfil e Links.
-* [ ] **A FAZER:** Conectar a página `/[slug]` à API (dados reais).
+* [x] Criar a rota dinâmica `/[slug]`.
+* [x] Criar API pública para buscar Perfil e Links reais no banco.
+* [x] Conectar a página `/[slug]` à API.
 
 ### 1.5: Home Page (Landing Page)
-* [ ] **A FAZER:** Criar a página de "vitrine" do projeto (com Header e Footer).
+* [x] Criar a página de "vitrine" do projeto (Landing Page).
+* [x] Implementar Header e Footer globais.
+* [x] Deploy em Produção (Vercel).
 
 ---
 
-## 💳 Fase 2: SaaS (Billing & Pro Features)
+## 💳 Fase 2: SaaS (Billing & Pro Features) - 🚧 PRÓXIMO PASSO
 
 O objetivo desta fase é transformar o projeto em um SaaS real com integração de pagamentos e *features* premium.
 
@@ -55,4 +55,13 @@ O objetivo desta fase é transformar o projeto em um SaaS real com integração 
 ### 2.2: Features PRO (Pro Features)
 * [ ] **Analytics:** Implementar a lógica de contagem de cliques nos links.
 * [ ] **Dashboard de Analytics:** Criar a UI para exibir os cliques.
-* [ ] **Temas Premium:** Permitir custom
+* [ ] **Temas Premium:** Permitir customização de cores e fundos.
+
+---
+
+## 📊 Fase 3: Melhorias & Extras (Backlog)
+
+* [ ] **Recuperação de Conta:** Implementar fluxo de "Esqueci minha senha" (envio de e-mail).
+* [ ] **Drag-and-drop:** Melhorar a UX para reordenar links arrastando.
+* [ ] **QR Code:** Gerar QR Code automático para o perfil.
+* [ ] **Social Login:** Adicionar Login com Google/GitHub.
